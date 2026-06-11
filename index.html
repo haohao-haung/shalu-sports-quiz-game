@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>沙鹿讚場</title>
+    <link rel="stylesheet" href="style.css?v=20260611-02">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="brand" type="button" data-action="home" aria-label="回到首頁">
+          <span class="brand-mark">讚</span>
+          <span>回到首頁</span>
+        </button>
+        <nav class="top-actions" aria-label="主要操作">
+          <button class="icon-button music-toggle" type="button" data-action="toggle-mute" title="音樂靜音" aria-label="音樂靜音">
+            <span aria-hidden="true">♪</span>
+          </button>
+          <button class="icon-button" type="button" data-action="map" title="讚場地圖" aria-label="讚場地圖">
+            <span aria-hidden="true">⌂</span>
+          </button>
+          <button class="icon-button" type="button" data-action="mistakes" title="錯題回顧" aria-label="錯題回顧">
+            <span aria-hidden="true">!</span>
+          </button>
+          <button class="icon-button" type="button" data-action="reset" title="重新開始" aria-label="重新開始">
+            <span aria-hidden="true">↻</span>
+          </button>
+        </nav>
+      </header>
+
+      <main id="app" class="main-view" tabindex="-1"></main>
+    </div>
+
+    <script src="data/questions.js?v=20260611-02"></script>
+    <script src="game.js?v=20260611-03"></script>
+  </body>
+</html>

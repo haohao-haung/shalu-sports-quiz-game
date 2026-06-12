@@ -577,7 +577,7 @@
     const hits = countCorrectAnswers(current);
     const remaining = Math.max(0, 10 - hits);
     const icons = Array.from({ length: 10 }, (_, index) => `
-      <span class="boss-health-icon ${index < hits ? "is-lost" : ""}" aria-hidden="true">♥</span>
+      <span class="boss-health-icon ${index >= 10 - hits ? "is-lost" : ""}" aria-hidden="true">♥</span>
     `).join("");
 
     return `

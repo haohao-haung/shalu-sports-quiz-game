@@ -822,6 +822,10 @@
                 <div><b>15</b><span>每場比賽題數</span></div>
                 <div><b>12</b><span>正式晉級門檻</span></div>
               </div>
+              <button class="map-power-help-button" type="button" data-action="open-power-help">
+                <span aria-hidden="true">?</span>
+                <span>讚力怎麼算？</span>
+              </button>
               <button class="map-dev-shortcut" type="button" data-action="dev-final">設計用：測試最終關</button>
             </div>
             <img class="campus-map-athlete role-${escapeHtml(state.role)}" src="${roleImage()}" alt="" aria-hidden="true">
@@ -829,9 +833,35 @@
             ${levels.map(renderMapMarker).join("")}
           </div>
         </div>
+        <div class="map-power-help" data-power-help hidden>
+          <button class="map-power-help-backdrop" type="button" data-action="close-power-help" aria-label="關閉讚力說明"></button>
+          <section class="map-power-help-panel" role="dialog" aria-modal="true" aria-labelledby="power-help-title">
+            <button class="map-power-help-close" type="button" data-action="close-power-help" title="關閉" aria-label="關閉">×</button>
+            <div class="map-power-help-heading">
+              <span class="map-power-help-icon" aria-hidden="true">讚</span>
+              <h2 id="power-help-title">讚力怎麼算？</h2>
+            </div>
+            <ul>
+              <li><strong>答對越多</strong>，讚力越高</li>
+              <li><strong>作答越快</strong>，可獲得速度加分</li>
+              <li><strong>全部答對</strong>，再加 5 點讚力</li>
+              <li>重新挑戰時，會<strong>保留更好的紀錄</strong></li>
+            </ul>
+            <button class="primary-button" type="button" data-action="close-power-help">知道了</button>
+          </section>
+        </div>
       </section>
     `;
     focusApp();
+  }
+
+  function togglePowerHelp(show) {
+    const help = app.querySelector?.("[data-power-help]");
+    if (!help) return;
+    help.hidden = !show;
+    if (show) {
+      help.querySelector?.('[data-action="close-power-help"].primary-button')?.focus();
+    }
   }
 
   function renderMapMarker(level) {
@@ -1882,6 +1912,8 @@
     if (action === "intro-skip") enterMapFromIntro();
     if (action === "boss-intro-start") renderBossIntroVideo();
     if (action === "boss-intro-skip") enterBossAfterIntro();
+    if (action === "open-power-help") togglePowerHelp(true);
+    if (action === "close-power-help") togglePowerHelp(false);
     if (action === "mistakes") {
       const isMapScreen = app.firstElementChild?.classList.contains("map-screen");
       if (state.current && !isMapScreen) return;
@@ -1929,6 +1961,12 @@
     if (target.dataset.action === "acknowledge-final-failure") {
       acknowledgeFinalFailure(Number(target.dataset.index), target.checked);
     }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    const help = app.querySelector?.("[data-power-help]");
+    if (help && !help.hidden) togglePowerHelp(false);
   });
 
   document.addEventListener("ended", (event) => {

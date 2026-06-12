@@ -647,6 +647,7 @@
   }
 
   function renderCover() {
+    pauseBackgroundMusic();
     app.innerHTML = `
       <section class="cover-screen" aria-label="沙鹿讚場封面">
         <button class="cover-entry" type="button" data-action="enter-home" aria-label="點擊後進入讚場"></button>

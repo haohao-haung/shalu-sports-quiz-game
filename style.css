@@ -1731,7 +1731,7 @@ button {
   overflow: auto;
 }
 
-.reaction-panel.has-next-action .feedback-panel p {
+.reaction-panel .feedback-panel p {
   font-size: var(--answer-font-size);
   line-height: 1.55;
 }

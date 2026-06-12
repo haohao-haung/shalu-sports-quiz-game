@@ -826,7 +826,6 @@
                 <span aria-hidden="true">?</span>
                 <span>讚力怎麼算？</span>
               </button>
-              <button class="map-dev-shortcut" type="button" data-action="dev-final">設計用：測試最終關</button>
             </div>
             <img class="campus-map-athlete role-${escapeHtml(state.role)}" src="${roleImage()}" alt="" aria-hidden="true">
             <div class="map-name-badge">${escapeHtml(state.name || "同學")}的讚場地圖</div>
@@ -1093,9 +1092,6 @@
       && current.index === current.questions.length - 1
       && countCorrectAnswers(current) >= 10;
     const finalPerfectStrike = finalComboReady && current.finalStrikeReady;
-    const devCompleteControl = current.levelId === "final"
-      ? '<button class="dev-complete-final" type="button" data-action="dev-final-one-health">設計用：血量剩一</button><button class="dev-complete-final" type="button" data-action="dev-complete-final">設計用：直接通關</button>'
-      : "";
     const sportStatus = current.levelId === "final"
       ? ""
       : `
@@ -1142,7 +1138,6 @@
             <div class="quiz-controls">
               ${secondaryControl}
               <div class="button-row">
-                ${devCompleteControl}
                 ${confirmed && current.levelId === "final"
                   ? confirmedButton
                   : `<button class="primary-button" type="button" data-action="confirm-answer" ${selected === null || checking || confirmed ? "disabled" : ""}>${checking ? "檢查中..." : "確認作答"}</button>`}
@@ -1797,55 +1792,6 @@
     return lessonPower + (recordFor("final")?.battlePower || 0);
   }
 
-  function devCompleteFinalChallenge() {
-    if (state.current?.levelId !== "final") return;
-
-    const completedAt = new Date().toLocaleString("zh-TW", { hour12: false });
-    state.records.final = {
-      correct: 10,
-      total: 10,
-      score: 100,
-      battlePower: 115,
-      avgSeconds: 1,
-      totalSeconds: 10,
-      passed: true,
-      completedAt
-    };
-    state.attempts.final = (state.attempts.final || 0) + 1;
-    state.completedAt = completedAt;
-    state.finalRetryUnlocked = false;
-    state.current = null;
-    state.pendingResult = null;
-    saveState();
-    renderComplete();
-  }
-
-  function devSetFinalHealthToOne() {
-    const current = state.current;
-    if (!current || current.levelId !== "final") return;
-
-    const targetHits = Math.min(9, current.questions.length - 1);
-    for (let index = 0; index < targetHits; index += 1) {
-      current.questions[index].answer = 0;
-      current.answers[index] = 0;
-      current.confirmed[index] = true;
-      current.questionTimes[index] = current.questionTimes[index] || 1;
-    }
-    for (let index = targetHits; index < current.questions.length; index += 1) {
-      current.answers[index] = null;
-      current.confirmed[index] = false;
-      current.questionTimes[index] = 0;
-    }
-    current.index = targetHits;
-    current.selected = null;
-    current.checking = false;
-    current.finalStrikeReady = false;
-    current.finalStrikeSoundsPlayed = false;
-    current.questionStartedAt = Date.now();
-    saveState();
-    renderQuestion();
-  }
-
   function renderPowerStat(levelId, label) {
     const record = recordFor(levelId);
     const value = record ? record.battlePower : 0;
@@ -1924,9 +1870,6 @@
     if (action === "complete") renderComplete();
     if (action === "reset") resetGame();
     if (action === "start-level") startLevel(button.dataset.level);
-    if (action === "dev-final") startLevel("final", { allowLocked: true, forceBossIntro: true });
-    if (action === "dev-final-one-health") devSetFinalHealthToOne();
-    if (action === "dev-complete-final") devCompleteFinalChallenge();
     if (action === "choose" && state.current && !state.current.confirmed[state.current.index]) {
       state.current.selected = Number(button.dataset.choice);
       saveState();

@@ -1226,26 +1226,6 @@ button {
   }
 }
 
-.map-dev-shortcut {
-  width: 100%;
-  min-height: 38px;
-  margin-top: 10px;
-  color: #7a2e0e;
-  background: rgba(255, 237, 213, 0.86);
-  border: 1px solid rgba(251, 146, 60, 0.7);
-  border-radius: 8px;
-  font-size: 0.86rem;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.map-dev-shortcut:hover,
-.map-dev-shortcut:focus-visible {
-  background: rgba(254, 215, 170, 0.96);
-  outline: 3px solid rgba(251, 146, 60, 0.24);
-  outline-offset: 2px;
-}
-
 .map-name-badge {
   position: absolute;
   left: 3%;
@@ -1262,24 +1242,6 @@ button {
   font-size: clamp(1rem, 1.5vw, 1.35rem);
   font-weight: 950;
   line-height: 1.35;
-}
-
-.dev-complete-final {
-  min-height: 54px;
-  padding: 0 16px;
-  color: #7a2e0e;
-  font-weight: 900;
-  background: rgba(255, 237, 213, 0.9);
-  border: 1px dashed rgba(217, 119, 6, 0.72);
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.dev-complete-final:hover,
-.dev-complete-final:focus-visible {
-  background: rgba(254, 215, 170, 0.96);
-  outline: 3px solid rgba(251, 146, 60, 0.24);
-  outline-offset: 2px;
 }
 
 .final-combo-button {
